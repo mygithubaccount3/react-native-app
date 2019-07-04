@@ -23,6 +23,7 @@ class PicturesList extends Component{
                         </TouchableOpacity>
                         <Text style={styles.author}>{item.user.name}</Text>
                         <Text style={styles.title}>{item.description ? item.description : item.alt_description ? item.alt_description : "No description"}</Text>
+                        <View style={styles.separator}/>
                     </View>
                     )}
                 />
@@ -68,5 +69,11 @@ const styles = StyleSheet.create({
         textAlign: "center",
         width: 250,
         fontFamily: "Roboto-Italic"
+    },
+    separator: {
+        backgroundColor: "lightgrey",
+        marginTop: 10,
+        height: 1,
+        width: 200
     }
 });

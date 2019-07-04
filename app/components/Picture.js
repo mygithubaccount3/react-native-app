@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import {View, Image, StyleSheet} from 'react-native';
 
 export default class Picture extends Component{
-    static navigationOptions = {
-        title: "Picture"
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: navigation.getParam("pictureTitle") ? navigation.getParam("pictureTitle") + "'s image" : "Unknown author"
+        }
     };
     render(){
         return(
