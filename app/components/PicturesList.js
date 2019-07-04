@@ -1,32 +1,19 @@
 import React, {Component} from 'react';
-import {AppRegistry, Text, View, FlatList, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import store from '../store'
-import {receive_images} from "../actions/fetchAction";
+import {Text, View, FlatList, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {connect} from "react-redux";
+import {itemsFetchData} from "../actions/fetchAction";
 
-export default class PicturesList extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            list: []
-        }
-    }
+class PicturesList extends Component{
     componentDidMount() {
-        fetch('http://api.unsplash.com/photos/?client_id=cf49c08b444ff4cb9e4d126b7e9f7513ba1ee58de7906e4360afc1a33d1bf4c0')
-            .then(res => res.json())
-            .then(res => {
-                store.dispatch(receive_images(res));
-                this.setState({
-                    list: res
-                });
-            })
-    };
+        this.props.fetchData('http://api.unsplash.com/photos/?client_id=cf49c08b444ff4cb9e4d126b7e9f7513ba1ee58de7906e4360afc1a33d1bf4c0');
+    }
     static navigationOptions = {
-        title: "Gallery",
+        title: "Gallery"
     };
     render(){
         return(
             <View style={styles.list}>
-                <FlatList keyExtractor={(item, index) => index.toString()} data={store.getState().images} renderItem={({item}) => (
+                <FlatList keyExtractor={(item, index) => index.toString()} data={this.props.items} renderItem={({item}) => (
                     <View style={styles.item}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Picture', {
                             url: item.urls.regular,
@@ -37,13 +24,26 @@ export default class PicturesList extends Component{
                         <Text style={styles.author}>{item.user.name}</Text>
                         <Text style={styles.title}>{item.description ? item.description : item.alt_description ? item.alt_description : "No description"}</Text>
                     </View>
-
                     )}
                 />
             </View>
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        items: state.items
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchData: (url) => dispatch(itemsFetchData(url))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PicturesList);
 
 const styles = StyleSheet.create({
     list: {
@@ -70,5 +70,3 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto-Italic"
     }
 });
-
-AppRegistry.registerComponent('PicturesList', () => PicturesList);

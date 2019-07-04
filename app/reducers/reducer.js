@@ -1,16 +1,8 @@
-let initialState = {
-    images: []
-};
-
-const asyncReducer = (state = initialState, action) => {
+export function items(state = [], action) {
     switch (action.type) {
-        case "FETCHED_IMAGES":
-            return Object.assign({}, state, {
-                images: action.data
-            });
+        case 'ITEMS_FETCH_DATA_SUCCESS':
+            return action.items;
         default:
             return state;
     }
-};
-
-export default asyncReducer;
+}

@@ -1,6 +1,14 @@
-export const receive_images = array => {
+export function itemsFetchDataSuccess(items) {
     return {
-        type: "FETCHED_IMAGES",
-        data: array
-    }
-};
+        type: 'ITEMS_FETCH_DATA_SUCCESS',
+        items
+    };
+}
+
+export function itemsFetchData(url) {
+    return (dispatch) => {
+        fetch(url)
+            .then((response) => response.json())
+            .then((items) => dispatch(itemsFetchDataSuccess(items)))
+    };
+}

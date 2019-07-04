@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AppRegistry, View, Image, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet} from 'react-native';
 
 export default class Picture extends Component{
     static navigationOptions = {
@@ -23,5 +23,3 @@ const styles = StyleSheet.create({
         alignItems: "stretch"
     }
 });
-
-AppRegistry.registerComponent('Picture', () => Picture);
