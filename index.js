@@ -24,3 +24,4 @@ const ReactNativeApp = () => (
 );
 
 AppRegistry.registerComponent("ReactNativeApp", () => ReactNativeApp);
+
